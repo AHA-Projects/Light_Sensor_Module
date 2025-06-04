@@ -15,6 +15,8 @@
 #define TFT_DC    25  // Data/Command select pin
 #define TFT_RST   26  // Reset pin (or connect to RST, see below)
 
+
+// defining variables for color channels to be used later. (Variables are temporary storage location for repetitive usage of certain information, it makes the code more readable)
 #define BLACK   0x0000
 #define WHITE   0xFFFF
 #define BLUE    0x001F
@@ -22,18 +24,18 @@
 #define RED     0xF800
 
 //GyverOLED<SSH1106_128x64> display;
-Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
+Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST); // Initializing the LED object for its appropriate usage.
 
-Adafruit_APDS9960 apds;
+Adafruit_APDS9960 apds; //Initializing the sensor object for its appropriate usage
 
 void setup() {
 
-  Serial.begin(115200);
-  tft.init(170,320);
+  Serial.begin(115200);  //Opening a serial output port
+  tft.init(170,320);  //Intializing and configuring the sensor using the object(tft).
   tft.setRotation(3);
   tft.fillScreen(BLACK);  
 
-
+  // checking sensor working or not
   if(!apds.begin()){
     Serial.println("failed to initialize device! Please check your wiring.");
   }
@@ -43,6 +45,8 @@ void setup() {
   apds.enableColor(true);
 }
 int currentDisplayedLightState = -1; // Use -1 to indicate no state is initially displayed
+
+
 
 void loop() {
   uint16_t r, g, b, c;
@@ -54,6 +58,8 @@ void loop() {
 
   apds.getColorData(&r, &g, &b, &c);
 
+
+  //Normalizing the color channels for consistent and scaled values.
   float r_norm = (float)r / c;
   float g_norm = (float)g / c; 
   float b_norm = (float)b / c;
