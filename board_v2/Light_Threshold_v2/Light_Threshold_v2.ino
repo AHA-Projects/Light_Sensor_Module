@@ -30,7 +30,7 @@ Adafruit_APDS9960 apds; //Initializing the sensor object for its appropriate usa
 
 void setup() {
 
-  Serial.begin(115200);  //Opening a serial output port
+  Serial.begin(115200);  //Opening a serial output for debugging
   tft.init(170,320);  //Intializing and configuring the sensor using the object(tft).
   tft.setRotation(3);
   tft.fillScreen(BLACK);  
